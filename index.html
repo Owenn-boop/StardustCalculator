@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Stardust Calculator For OSRS (Old School RuneScape)">
+        <meta name="author" content="Owenn Herrmann">
+        <meta name="RuneScape, Old School, Old School Runescape, Stardust, Star, Calculator, Shooting Stars">
+        <title>Stardust Calculator</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="./main.js"></script>
+        <style>
+            #calculationArea {
+                width: 80%;
+                margin: auto;
+                margin-top: 15px;
+            }
+        </style>
+        <script>
+            function updateSoftClayTable(numberOfStardust) {
+                let tableBody = document.getElementById("softClayTableBody");
+                let tableHeader = document.getElementById("packCount");
+                let packCount = Math.floor(numberOfStardust / SOFT_CLAY_COST);
+                let totalClay = packCount * CLAY_PACK_AMOUNT;
+                let clayValue = totalClay * softClayGEPrice;
+
+                tableHeader.innerHTML = `${packCount} Soft Clay Packs`
+                tableBody.innerHTML = `<tr class="table-secondary"><th>${totalClay.toLocaleString()}</th><th>${clayValue.toLocaleString()} GP</th></tr>`
+            }
+
+            function updateGemTable(numberOfStardust) {
+                let tableBody = document.getElementById("gemTableBody");
+                let tableHeader = document.getElementById("bagCount");
+                let gemBagCount = Math.floor(numberOfStardust / BAG_COST);
+                let totalGems = gemBagCount * GEM_BAG_AMOUNT;
+                let tableRows = [];
+                let totalValue = 0;
+                let totalXP = 0;
+
+                // loop over each gem
+                for(key in GEM_BAG_RATES) {
+                    let amountOfThisGem = GEM_BAG_RATES[key] * totalGems;
+
+                    if(key == "Uncut onyx") {
+                        // don't round onyx to zero
+                        // instead round it to a very low decimal point:
+                        amountOfThisGem = Math.round(amountOfThisGem * 1000000) / 1000000;
+                    }
+                    else amountOfThisGem = Math.round(amountOfThisGem * 10) / 10;
+
+                    let cuttingXP = Math.round(GEM_XP_CUT[key] * amountOfThisGem);
+                    let valueOfGems = Math.round(uncutGemGEPrice[key] * amountOfThisGem);
+
+                    totalValue += valueOfGems;
+                    totalXP += cuttingXP;
+                    // push row to tableRows
+                    tableRows.push(`<tr class="table-secondary"><th>${key}</th><th>${amountOfThisGem.toLocaleString()}</th><th>${cuttingXP.toLocaleString()}</th><th>${valueOfGems.toLocaleString()} GP</th></tr>`);
+                }
+                tableRows.push(`<tr class="table-info"><th>Total</th><th>${totalGems.toLocaleString()}</th><th>${totalXP.toLocaleString()}</th><th>${totalValue.toLocaleString()} GP</th></tr>`);
+                
+                tableHeader.innerHTML = `${gemBagCount} Gem Bags:`
+
+                tableBody.innerHTML = tableRows.join("");
+            }
+
+            function updateStardustCalculations(numberOfStardust) {
+                let calcArea = document.getElementById("calculationArea");
+
+                // update the tables
+                updateSoftClayTable(numberOfStardust);
+                updateGemTable(numberOfStardust);
+
+                // enables the calculation area if needed
+                if (calcArea.hidden) {calcArea.hidden = false;}
+            }
+        </script>
+
+    </head>
+    <body class="text-center bg-dark text-white">
+        <div class="container">
+            <header>
+                <h1>Stardust Calculator</h1>
+                <hr>
+            </header>
+            <main>
+                <h3>Enter Number of Stardust</h3>
+                <input class="text-center" type="number" title="Stardust" value="0" id="stardustAmount" min="0" oninput="updateStardustCalculations(this.value)">
+                <div id="calculationArea" hidden>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                    <h3 id="bagCount">Gem Bags:</h3>
+                                    <tr>
+                                        <th scope="col">Gem</th>
+                                        <th scope="col">Quantity (estimated)</th>
+                                        <th scope="col">Cutting XP</th>
+                                        <th scope="col">GE Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="gemTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm table-responsive">
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                    <h3 id="packCount">Soft Clay Packs:</h3>
+                                    <tr>
+                                        <th scope="col">Total Clay</th>
+                                        <th scope="col">GE Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="softClayTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <blockquote class="blockquote text-center bg-light text-black rounded-3" style="width: 50%; margin: auto; margin-top: 25px;">This calculator shows you the possible rewards of turning in stardust from the <a href="https://oldschool.runescape.wiki/w/Shooting_Stars">Shooting Stars</a> minigame in <a href="https://oldschool.runescape.com/">Old School RuneScape</a>.</blockquote>
+                <blockquote class="blockquote text-center bg-light text-black rounded-3" style="width: fit-content; margin: auto; margin-top: 25px; padding: 4px;">Data provided by <a href="https://oldschool.runescape.wiki/">runescape.wiki</a></blockquote>
+            </main>
+        </div>
+    </body>
+</html>
