@@ -85,7 +85,7 @@
             </header>
             <main>
                 <h3>Enter Number of Stardust</h3>
-                <input class="text-center" type="number" title="Stardust" value="0" id="stardustAmount" min="0" oninput="updateStardustCalculations(this.value)"><img alt="stardust" onclick="updateStardustCalculations(document.getElementById('stardustAmount').value); setGEValues();" src="https://oldschool.runescape.wiki/images/Stardust_175.png?d7a80&20210317122223">
+                <input class="text-center" type="number" title="Stardust" value="0" id="stardustAmount" min="0" oninput="updateStardustCalculations(this.value)"><img alt="stardust" onclick="setGEValues(); updateStardustCalculations(document.getElementById('stardustAmount').value);" src="https://oldschool.runescape.wiki/images/Stardust_175.png?d7a80&20210317122223">
                 <div id="calculationArea" hidden>
                     <hr>
                     <div class="row">
