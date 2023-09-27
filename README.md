@@ -1,6 +1,6 @@
 # StardustCalculator
 
-Try it <a href="https://owenn.dev/StardustCalculator/">here</a>.
+### Try it <a href="https://owenn.dev/StardustCalculator/">here</a>.
 
 This is a calculator for the game Old School Runescape.
 
