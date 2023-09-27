@@ -56,7 +56,6 @@ let uncutGemGEPrice = {};
 
 // sets the GE values of gems and soft clay
 async function setGEValues() {
-    let latestGrandExchangePrices;
     const response = await fetch('https://prices.runescape.wiki/api/v1/osrs/latest');
     const responseJson = await response.json();
     softClayGEPrice = responseJson.data[CLAY_PACK_ID]['low'];
