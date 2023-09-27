@@ -16,6 +16,37 @@
                 margin: auto;
                 margin-top: 15px;
             }
+
+            #starButton {
+                position: absolute;
+                right: 0;
+                top: 10px;
+            }
+            
+            .container {
+                position: relative;
+            }
+
+            #descriptionBlockQuote {
+                width: 50%;
+                margin: auto;
+                margin-top: 25px;
+            }
+            
+            @media (max-width: 425px) {
+                #starButton {
+                    right: initial;
+                    top: initial;
+                    position: initial;
+                    text-align: center;
+                }
+            }
+            @media (max-width: 768px) {
+                #descriptionBlockQuote {
+                    width: 100%;
+                    margin-top: 25px;
+                }
+            }
         </style>
         <script>
             function updateSoftClayTable(numberOfStardust) {
@@ -81,6 +112,7 @@
         <div class="container">
             <header>
                 <h1>Stardust Calculator</h1>
+                <iframe src="https://ghbtns.com/github-btn.html?user=Owenn-boop&repo=StardustCalculator&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" id="starButton"></iframe>
                 <hr>
             </header>
             <main>
@@ -120,7 +152,7 @@
                     </div>
                 </div>
                 <br/>
-                <blockquote class="blockquote text-center bg-light text-black rounded-3" style="width: 50%; margin: auto; margin-top: 25px;">This calculator shows you the possible rewards of turning in stardust from the <a href="https://oldschool.runescape.wiki/w/Shooting_Stars">Shooting Stars</a> minigame in <a href="https://oldschool.runescape.com/">Old School RuneScape</a>.</blockquote>
+                <blockquote class="blockquote text-center bg-light text-black rounded-3" id="descriptionBlockQuote">This calculator shows you the possible rewards of turning in stardust from the <a href="https://oldschool.runescape.wiki/w/Shooting_Stars">Shooting Stars</a> minigame in <a href="https://oldschool.runescape.com/">Old School RuneScape</a>.</blockquote>
                 <blockquote class="blockquote text-center bg-light text-black rounded-3" style="width: fit-content; margin: auto; margin-top: 25px; padding: 4px;">Data provided by <a href="https://oldschool.runescape.wiki/">runescape.wiki</a></blockquote>
             </main>
         </div>
